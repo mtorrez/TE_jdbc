@@ -78,7 +78,7 @@ public class Grabador extends HttpServlet {
             int res = sentencia.executeUpdate(sql);
 
             if (res != 0) {
-                out.println("<h3>Actualización exitosa<h3>");
+                out.println("<h3>Actualización exitosa</h3>");
             } else {
                 out.println("<h3>Errores en la inserción</h3>");
             }
@@ -95,9 +95,6 @@ public class Grabador extends HttpServlet {
         }
         out.println("</body>");
         out.println("</html>");
-
-
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
