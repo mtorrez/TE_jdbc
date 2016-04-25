@@ -38,19 +38,25 @@ public class Grabador extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         PrintWriter out = response.getWriter();
-        
+
         String nombre = request.getParameter("nombre");
         String telefono = request.getParameter("telefono");
         String correo = request.getParameter("correo");
-        
-        out.println("Datos recibidos");
-        out.println(nombre);
-        out.println(telefono);
-        out.println(correo);
-        
-        try{
+
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Servlet Listador</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>Datos recibidos</h1>");
+        out.println("<br>" + nombre);
+        out.println("<br>" + telefono);
+        out.println("<br>" + correo);
+
+        try {
             // Driver
             String driver = "com.mysql.jdbc.Driver";
             // Canal de conexion a la base de datos
@@ -59,7 +65,7 @@ public class Grabador extends HttpServlet {
             String usuario = "root";
             // Especificar el password
             String password = "";
-            
+
             // Leer el driver para MySQL
             Class.forName(driver);
             // Crear un canal de conexion
@@ -67,23 +73,31 @@ public class Grabador extends HttpServlet {
             // Crear una sentencia
             Statement sentencia = con.createStatement();
             // 
-            String sql = "insert into contacto (nombre,telefono,correo) values('"+nombre+"','"+telefono+"','"+correo+"')";
+            String sql = "insert into contacto (nombre,telefono,correo) values('" + nombre + "','" + telefono + "','" + correo + "')";
             // Ejecutar la sentencia
             int res = sentencia.executeUpdate(sql);
-            
-            if (res != 0) out.println("Actualización exitosa");
-            else out.println("Errores en la inserción");
-            
+
+            if (res != 0) {
+                out.println("<h3>Actualización exitosa<h3>");
+            } else {
+                out.println("<h3>Errores en la inserción</h3>");
+            }
+
             sentencia.close();
             con.close();
-           
-        } catch(ClassNotFoundException e){
+
+            out.println("<p><a href='index.jsp'>Volver</a>");
+
+        } catch (ClassNotFoundException e) {
             out.println("Error en driver " + e.getMessage());
-        } catch(SQLException e){
-            out.println("SQLException " +e.getMessage());
-        }    
-        
-        
+        } catch (SQLException e) {
+            out.println("SQLException " + e.getMessage());
+        }
+        out.println("</body>");
+        out.println("</html>");
+
+
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
